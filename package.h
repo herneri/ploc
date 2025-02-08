@@ -26,4 +26,7 @@ struct Package {
 #define DEFAULT_GROUP "none"
 #define DEFAULT_PATH "/usr/local/bin/"
 
+/* Create a copy of a package and install it. */
+int ploc_install_package(struct Package *pkg, const char *input_path);
+
 #endif
