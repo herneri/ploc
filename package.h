@@ -23,7 +23,7 @@ struct Package {
 };
 
 /* Default package values */
-const char *default_group = "none";
-const char *default_path = "/usr/local/bin/";
+#define DEFAULT_GROUP "none"
+#define DEFAULT_PATH "/usr/local/bin/"
 
 #endif
