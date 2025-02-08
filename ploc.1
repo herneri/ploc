@@ -1,0 +1,54 @@
+.TH ploc 1 "02 8 2025" "1.0" "User commands"
+.SH NAME
+ploc \- Package manager for locally installed packages
+
+.SH SYNOPSIS
+ploc [OPTION] [PACKAGE]
+
+.SH DESCRIPTION
+Manages packages that were user installed. This avoids interference with the
+system package manager and allows users to organize their own local packages.
+
+.SH OPTIONS
+.LP
+.TP
+\fB\-h\fR
+Print options.
+.TP
+\fB\-v\fR
+Print version.
+.TP
+\fB\-i\fR
+Create a copy of a package and install it.
+.TP
+\fB\-r\fR
+Delete a package.
+.TP
+\fB\-l\fR
+Print package metadata.
+.TP
+\fB\-s\fR
+Search for packages that have the same name.
+.TP
+\fB\-S\fR
+Search for a specific package.
+
+.SH EXIT STATUS
+.LP
+0: Successful operation
+.TP
+1: Failed to open database
+.TP
+2: Failed to initialize database
+
+.SH FILES
+.LP
+/var/local/ploc.db
+.TP
+ploc's database, contains package metadata.
+
+.SH BUGS
+Repositories are currently not supported, so packages must be local.
+
+.SH AUTHOR
+Eric Hernandez (herneri@protonmail.com)
