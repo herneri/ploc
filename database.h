@@ -16,12 +16,14 @@
 #define PLOC_DB_H
 
 #include <sqlite3.h>
+#include <stdbool.h>
 
-sqlite3 *db;
-const char *name = "ploc.db";
+#define PLOC_DATABASE_PATH "/var/local/ploc.db"
 
 enum operation_values {
 	DB_REMOVE, DB_REPLACE, DB_INSERT
 };
+
+bool ploc_database_initialize(sqlite3 *database_connection);
 
 #endif
