@@ -16,9 +16,9 @@
 #define PLOC_PKG_H
 
 struct Package {
-	char *name;
-	char *group;
-	char *path;
+	char name[20];
+	char group[20];
+	char path[255];
 	int id;
 };
 
