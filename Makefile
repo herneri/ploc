@@ -1,5 +1,6 @@
 CC = gcc
 FLAGS = -lsqlite3
+SOURCE = database.h database.c package.h main.c
 
-default:
-	$(CC) $(FLAGS) main.c -o ploc
+default: $(SOURCE)
+	$(CC) $(FLAGS) $^ -o ploc
