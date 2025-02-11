@@ -49,6 +49,39 @@ bool ploc_database_initialize(sqlite3 *database_connection) {
 	return true;
 }
 
+void ploc_check_conflict(sqlite3 *database_connection, const int operation, struct Package *pkg) {
+	sqlite3_stmt *prepared_statement = NULL;
+	char *sql_statement = NULL;
+	int result = 0;
+
+	if (operation == DB_INSERT) {
+		sql_statement = "SELECT name, path FROM package WHERE name = ? AND path = ?";
+	} else {
+		sql_statement = "SELECT name FROM package WHERE name = ?";
+	}
+
+	sqlite3_prepare_v2(database_connection, sql_statement, 140, &prepared_statement, NULL);
+
+	sqlite3_bind_text(prepared_statement, 1, pkg->name, -1, NULL);
+	if (operation == DB_INSERT) {
+		sqlite3_bind_text(prepared_statement, 2, pkg->path, -1, NULL);
+	}
+
+	result = sqlite3_step(prepared_statement);
+
+	if (result == SQLITE_ROW) {
+		switch (operation) {
+		case DB_INSERT:
+			fprintf(stderr, "ploc: A package already exists with the name \"%s\" at \"%s\".\nRun installation again with -f to force it.\n", pkg->name, pkg->path);
+			exit(3);
+			break;
+		}
+	}
+
+	sqlite3_finalize(prepared_statement);
+	return;
+}
+
 void ploc_database_insert(sqlite3 *database_connection, struct Package *pkg) {
 	char *sql_statement = "INSERT INTO package(name, pgroup, path) VALUES(?, ?, ?)";
 	sqlite3_stmt *prepared_statement = NULL;

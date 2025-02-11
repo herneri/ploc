@@ -26,6 +26,8 @@ int ploc_install_package(sqlite3 *database_connection, struct Package *pkg, cons
 	char *output_path = strcat(pkg->path, pkg->name);
 	char buffer[255];
 
+	ploc_check_conflict(database_connection, DB_INSERT, pkg);
+
 	input_file = fopen(input_path, "rb");
 	if (input_file == NULL) {
 		fprintf(stderr, "ploc: Failed to open input package at %s\n", input_path);
