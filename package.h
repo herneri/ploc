@@ -15,6 +15,8 @@
 #ifndef PLOC_PKG_H
 #define PLOC_PKG_H
 
+#include <sqlite3.h>
+
 struct Package {
 	char name[20];
 	char group[20];
@@ -27,6 +29,6 @@ struct Package {
 #define DEFAULT_PATH "/usr/local/bin/"
 
 /* Create a copy of a package and install it. */
-int ploc_install_package(struct Package *pkg, const char *input_path);
+int ploc_install_package(sqlite3 *database_connection, struct Package *pkg, const char *input_path);
 
 #endif

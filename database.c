@@ -18,6 +18,7 @@
 
 #include <sqlite3.h>
 #include "database.h"
+#include "package.h"
 
 bool ploc_database_initialize(sqlite3 *database_connection) {
 	const char *sql_statement = "\
@@ -46,4 +47,19 @@ bool ploc_database_initialize(sqlite3 *database_connection) {
 	}
 
 	return true;
+}
+
+void ploc_database_insert(sqlite3 *database_connection, struct Package *pkg) {
+	char *sql_statement = "INSERT INTO package(name, pgroup, path) VALUES(?, ?, ?)";
+	sqlite3_stmt *prepared_statement = NULL;
+
+	sqlite3_prepare_v2(database_connection, sql_statement, 295, &prepared_statement, NULL);
+	sqlite3_bind_text(prepared_statement, 1, pkg->name, -1, NULL);
+	sqlite3_bind_text(prepared_statement, 2, pkg->group, -1, NULL);
+	sqlite3_bind_text(prepared_statement, 3, pkg->path, -1, NULL);
+
+	sqlite3_step(prepared_statement);
+	sqlite3_finalize(prepared_statement);
+
+	return;
 }

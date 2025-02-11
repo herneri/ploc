@@ -17,6 +17,7 @@
 
 #include <sqlite3.h>
 #include <stdbool.h>
+#include "package.h"
 
 #define PLOC_DATABASE_PATH "/var/local/ploc.db"
 
@@ -25,5 +26,7 @@ enum operation_values {
 };
 
 bool ploc_database_initialize(sqlite3 *database_connection);
+
+void ploc_database_insert(sqlite3 *database_connection, struct Package *pkg);
 
 #endif

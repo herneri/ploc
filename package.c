@@ -13,12 +13,14 @@
 */
 
 #include "package.h"
+#include "database.h"
 
 #include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <sqlite3.h>
 
-int ploc_install_package(struct Package *pkg, const char *input_path) {
+int ploc_install_package(sqlite3 *database_connection, struct Package *pkg, const char *input_path) {
 	FILE *input_file = NULL;
 	FILE *output_file = NULL;
 	char *output_path = strcat(pkg->path, pkg->name);
@@ -36,14 +38,15 @@ int ploc_install_package(struct Package *pkg, const char *input_path) {
 		return 1;
 	}
 
+	ploc_database_insert(database_connection, pkg);
+
 	while ((fread(buffer, 255, 1, input_file)) != 0) {
 		fwrite(buffer, 255, 1, output_file);
 	}
 
-	chmod(output_path, 0775);
-	// TODO: Insert package metadata into database.
-
 	fclose(input_file);
 	fclose(output_file);
+
+	chmod(output_path, 0775);
 	return 0;
 }
