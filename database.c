@@ -73,7 +73,7 @@ void ploc_check_conflict(sqlite3 *database_connection, const int operation, stru
 		switch (operation) {
 		case DB_INSERT:
 			fprintf(stderr, "ploc: A package already exists with the name \"%s\" at \"%s\".\nRun installation again with -f to force it.\n", pkg->name, pkg->path);
-			exit(3);
+			exit(PLOC_CONFLICT);
 			break;
 		}
 	}
