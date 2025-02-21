@@ -109,3 +109,18 @@ void ploc_database_remove(sqlite3 *database_connection, struct Package *pkg) {
 
 	return;
 }
+
+void ploc_database_fetch_all(sqlite3 *database_connection, const char *name) {
+	char *sql_statement = "SELECT path FROM package WHERE name = ?";
+	sqlite3_stmt *prepared_statement = NULL;
+
+	sqlite3_prepare_v2(database_connection, sql_statement, 295, &prepared_statement, NULL);
+	sqlite3_bind_text(prepared_statement, 1, name, -1, NULL);
+
+	while (sqlite3_step(prepared_statement) == SQLITE_ROW) {
+		printf("%s\n", sqlite3_column_text(prepared_statement, 0));
+	}
+
+	sqlite3_finalize(prepared_statement);
+	return;
+}
