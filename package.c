@@ -72,3 +72,10 @@ int ploc_delete_package(sqlite3 *database_connection, struct Package *pkg) {
 
 	return PLOC_OK;
 }
+
+void ploc_list_package(struct Package *pkg) {
+	printf("Name:\t%s\n", pkg->name);
+	printf("Group:\t%s\n", pkg->group);
+	printf("Path:\t%s\n", pkg->path);
+	return;
+}

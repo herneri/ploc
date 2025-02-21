@@ -38,4 +38,7 @@ int ploc_install_package(sqlite3 *database_connection, struct Package *pkg, cons
 /* Remove a package from the file system and delete its database entry. */
 int ploc_delete_package(sqlite3 *database_connection, struct Package *pkg);
 
+/* List metadata from a loaded package. */
+void ploc_list_package(struct Package *pkg);
+
 #endif
