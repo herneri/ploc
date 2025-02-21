@@ -29,10 +29,13 @@ struct Package {
 #define DEFAULT_PATH "/usr/local/bin/"
 
 enum ploc_exit_codes {
-	PLOC_OK, PLOC_DB_FAIL, PLOC_INIT_FAIL, PLOC_CONFLICT
+	PLOC_OK, PLOC_DB_FAIL, PLOC_INIT_FAIL, PLOC_FS_FAIL, PLOC_CONFLICT
 };
 
 /* Create a copy of a package and install it. */
 int ploc_install_package(sqlite3 *database_connection, struct Package *pkg, const char *input_path);
+
+/* Remove a package from the file system and delete its database entry. */
+int ploc_delete_package(sqlite3 *database_connection, struct Package *pkg);
 
 #endif

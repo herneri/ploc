@@ -31,4 +31,6 @@ void ploc_check_conflict(sqlite3 *database_connection, const int operation, stru
 
 void ploc_database_insert(sqlite3 *database_connection, struct Package *pkg);
 
+void ploc_database_remove(sqlite3 *database_connection, struct Package *pkg);
+
 #endif

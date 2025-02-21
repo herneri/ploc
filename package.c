@@ -15,10 +15,12 @@
 #include "package.h"
 #include "database.h"
 
+#include <sqlite3.h>
+
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 #include <sys/stat.h>
-#include <sqlite3.h>
 
 int ploc_install_package(sqlite3 *database_connection, struct Package *pkg, const char *input_path) {
 	FILE *input_file = NULL;
@@ -51,4 +53,22 @@ int ploc_install_package(sqlite3 *database_connection, struct Package *pkg, cons
 
 	chmod(output_path, 0775);
 	return 0;
+}
+
+int ploc_delete_package(sqlite3 *database_connection, struct Package *pkg) {
+	int result = -1;
+	char absolute_path[255];
+
+	ploc_database_remove(database_connection, pkg);
+
+	strcpy(absolute_path, pkg->path);
+	strcat(absolute_path, pkg->name);
+
+	result = unlink(absolute_path);
+	if (result != 0) {
+		fprintf(stderr, "ploc: Failed to delete package at %s\n", absolute_path);
+		return PLOC_FS_FAIL;
+	}
+
+	return PLOC_OK;
 }
