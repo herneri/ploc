@@ -21,10 +21,6 @@
 
 #define PLOC_DATABASE_PATH "/var/local/ploc.db"
 
-enum operation_values {
-	DB_INSERT, DB_REMOVE, DB_INFO
-};
-
 bool ploc_database_initialize(sqlite3 *database_connection);
 
 void ploc_handle_conflict(struct Package *pkg, sqlite3_stmt *prepared_statement, char **first_path);
