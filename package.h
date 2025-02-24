@@ -29,7 +29,8 @@ struct Package {
 #define DEFAULT_PATH "/usr/local/bin/"
 
 enum ploc_exit_codes {
-	PLOC_OK, PLOC_DB_FAIL, PLOC_INIT_FAIL, PLOC_FS_FAIL, PLOC_CONFLICT
+	PLOC_OK, PLOC_DB_FAIL, PLOC_INIT_FAIL,
+	PLOC_FS_FAIL, PLOC_CONFLICT, PLOC_MEM_FAIL
 };
 
 /* Create a copy of a package and install it. */

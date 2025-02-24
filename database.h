@@ -27,7 +27,9 @@ enum operation_values {
 
 bool ploc_database_initialize(sqlite3 *database_connection);
 
-void ploc_check_conflict(sqlite3 *database_connection, const int operation, struct Package *pkg);
+void ploc_handle_conflict(struct Package *pkg, sqlite3_stmt *prepared_statement, char **first_path);
+
+void ploc_check_conflict(sqlite3 *database_connection, const bool is_insertion, struct Package *pkg);
 
 void ploc_database_insert(sqlite3 *database_connection, struct Package *pkg);
 
