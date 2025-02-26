@@ -19,6 +19,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <sys/stat.h>
 
@@ -80,5 +81,36 @@ void ploc_list_package(struct Package *pkg) {
 	printf("Name:\t%s\n", pkg->name);
 	printf("Group:\t%s\n", pkg->group);
 	printf("Path:\t%s\n", pkg->path);
+	return;
+}
+
+void ploc_get_name_and_path(struct Package *pkg, char *path) {
+	int path_length = strnlen(path, 275);
+	int name_start_index = -1;
+
+	for (int i = path_length - 1; i > 0; i--) {
+		if (path[i] == '/') {
+			name_start_index = i + 1;
+			break;
+		}
+	}
+
+	if (name_start_index == -1) {
+		fprintf(stderr, "ploc: Missing absolute path\n");
+		exit(PLOC_ARG_SYNTAX_ERR);
+	}
+
+	for (int i = 0; i < name_start_index; i++) {
+		pkg->path[i] = path[i];
+	}
+
+	for (int i = 0, j = name_start_index; i < 20 && j < path_length; i++, j++) {
+		pkg->name[i] = path[j];
+
+		if (i < 19) {
+			pkg->name[i + 1] = '\0';
+		}
+	}
+
 	return;
 }

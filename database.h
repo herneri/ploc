@@ -37,4 +37,7 @@ void ploc_database_fetch_all(sqlite3 *database_connection, const char *name);
 /* Determine whether a specific package is installed. */
 void ploc_database_search_unique(sqlite3 *database_connection, struct Package *pkg);
 
+/* Load package metadata into a struct. */
+void ploc_database_load_info(sqlite3 *database_connection, struct Package *pkg);
+
 #endif

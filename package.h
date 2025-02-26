@@ -30,7 +30,8 @@ struct Package {
 
 enum ploc_exit_codes {
 	PLOC_OK, PLOC_DB_FAIL, PLOC_INIT_FAIL,
-	PLOC_FS_FAIL, PLOC_CONFLICT, PLOC_MEM_FAIL
+	PLOC_FS_FAIL, PLOC_CONFLICT, PLOC_MEM_FAIL,
+	PLOC_ARG_SYNTAX_ERR
 };
 
 /* Create a copy of a package and install it. */
@@ -41,5 +42,8 @@ int ploc_delete_package(sqlite3 *database_connection, struct Package *pkg);
 
 /* List metadata from a loaded package. */
 void ploc_list_package(struct Package *pkg);
+
+/* Find and set the name and path given in an argument. */
+void ploc_get_name_and_path(struct Package *pkg, char *arg);
 
 #endif

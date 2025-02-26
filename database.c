@@ -236,3 +236,21 @@ void ploc_database_search_unique(sqlite3 *database_connection, struct Package *p
 	sqlite3_finalize(prepared_statement);
 	return;
 }
+
+void ploc_database_load_info(sqlite3 *database_connection, struct Package *pkg) {
+	char *sql_statement = "SELECT pgroup, path FROM package WHERE name = ? AND path = ?";
+	sqlite3_stmt *prepared_statement = NULL;
+
+	sqlite3_prepare_v2(database_connection, sql_statement, 295, &prepared_statement, NULL);
+	sqlite3_bind_text(prepared_statement, 1, pkg->name, -1, NULL);
+	sqlite3_bind_text(prepared_statement, 2, pkg->path, -1, NULL);
+
+	if (sqlite3_step(prepared_statement) != SQLITE_ROW) {
+		fprintf(stderr, "ploc: Package at %s%s isn't recorded by ploc.\n", pkg->path, pkg->name);
+		exit(PLOC_CONFLICT);
+	}
+
+	strcpy(pkg->group, sqlite3_column_text(prepared_statement, 0));
+	sqlite3_finalize(prepared_statement);
+	return;
+}
