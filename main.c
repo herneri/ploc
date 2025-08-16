@@ -19,6 +19,15 @@
 #include <stdio.h>
 #include <string.h>
 
+int check_arg_count(int current_arg, int argc) {
+	if (current_arg >= argc) {
+		fprintf(stderr, "ploc: Not enough arguments\n");
+		return -1;
+	}
+
+	return 0;
+}
+
 int main(int argc, char *argv[]) {
 	sqlite3 *database_connection = NULL;
 	int status = sqlite3_open(PLOC_DATABASE_PATH, &database_connection);
@@ -52,11 +61,6 @@ int main(int argc, char *argv[]) {
 			return PLOC_ARG_SYNTAX_ERR;
 		}
 
-		if (arg_mode == GET_OPERATION && argv[i][1] != 'a' && i + 1 >= argc) {
-			fprintf(stderr, "ploc: Not enough arguments\n");
-			return PLOC_ARG_SYNTAX_ERR;
-		}
-
 		switch (argv[i][1]) {
 		case 'i':
 			if ((i + 1 == argc - 1) || (i + 1 < argc - 1 && argv[i + 1][0] == '-')) {
@@ -64,6 +68,10 @@ int main(int argc, char *argv[]) {
 				ploc_database_insert(database_connection, &pkg);
 				i++;
 				break;
+			}
+
+			if (check_arg_count(i + 2, argc) != 0) {
+				return PLOC_ARG_SYNTAX_ERR;
 			}
 
 			if (strchr(argv[i + 2], '/') == NULL) {
@@ -77,6 +85,10 @@ int main(int argc, char *argv[]) {
 			i += 2;
 			break;
 		case 'r':
+			if (check_arg_count(i + 1, argc) != 0) {
+				return PLOC_ARG_SYNTAX_ERR;
+			}
+
 			strncpy(pkg.name, argv[i + 1], 20);
 			ploc_check_conflict(database_connection, false, &pkg);
 			ploc_delete_package(database_connection, &pkg);
@@ -84,6 +96,10 @@ int main(int argc, char *argv[]) {
 			i++;
 			break;
 		case 'l':
+			if (check_arg_count(i + 1, argc) != 0) {
+				return PLOC_ARG_SYNTAX_ERR;
+			}
+
 			strcpy(pkg.name, argv[i + 1]);
 			ploc_check_conflict(database_connection, false, &pkg);
 			if (strncmp(pkg.path, "NULL", 255) == 0) {
@@ -97,10 +113,18 @@ int main(int argc, char *argv[]) {
 			arg_mode = FIND_ARG;
 			break;
 		case 's':
+			if (check_arg_count(i + 1, argc) != 0) {
+				return PLOC_ARG_SYNTAX_ERR;
+			}
+
 			ploc_database_fetch_all(database_connection, argv[i + 1]);
 			i++;
 			break;
 		case 'S':
+			if (check_arg_count(i + 1, argc) != 0) {
+				return PLOC_ARG_SYNTAX_ERR;
+			}
+
 			ploc_get_name_and_path(&pkg, argv[i + 1]);
 			ploc_database_search_unique(database_connection, &pkg);
 
