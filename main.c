@@ -22,7 +22,7 @@
 int main(int argc, char *argv[]) {
 	sqlite3 *database_connection = NULL;
 	int status = sqlite3_open(PLOC_DATABASE_PATH, &database_connection);
-	struct Package pkg = {"", DEFAULT_GROUP, DEFAULT_PATH};
+	struct Package pkg = {"", DEFAULT_GROUP, ""};
 
 	enum ARG_MODES {
 		FIND_ARG, GET_OPERATION
@@ -75,7 +75,7 @@ int main(int argc, char *argv[]) {
 			i += 2;
 			break;
 		case 'r':
-			ploc_get_name_and_path(&pkg, argv[i + 1]);
+			strncpy(pkg.name, argv[i + 1], 20);
 			ploc_check_conflict(database_connection, false, &pkg);
 			ploc_delete_package(database_connection, &pkg);
 

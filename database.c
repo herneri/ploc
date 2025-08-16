@@ -162,6 +162,7 @@ void ploc_check_conflict(sqlite3 *database_connection, const bool is_insertion, 
 
 	temp_package_path[254] = '\0';
 	strcpy(temp_package_path, (char *) sqlite3_column_text(prepared_statement, 0));
+	strcpy(pkg->path, (char *) sqlite3_column_text(prepared_statement, 0));
 
 	result = sqlite3_step(prepared_statement);
 	if (result == SQLITE_DONE) {
