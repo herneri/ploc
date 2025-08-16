@@ -69,7 +69,7 @@ int main(int argc, char *argv[]) {
 				return PLOC_ARG_SYNTAX_ERR;
 			}
 
-			strcpy(pkg.path, argv[i + 2]);
+			ploc_get_name_and_path(&pkg, argv[i + 2]);
 			ploc_install_package(database_connection, &pkg, argv[i + 1]);
 
 			i += 2;
