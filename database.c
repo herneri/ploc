@@ -192,11 +192,12 @@ void ploc_database_insert(sqlite3 *database_connection, struct Package *pkg) {
 }
 
 void ploc_database_remove(sqlite3 *database_connection, struct Package *pkg) {
-	char *sql_statement = "DELETE FROM package WHERE id = ?";
+	char *sql_statement = "DELETE FROM package WHERE path = ? AND name = ?";
 	sqlite3_stmt *prepared_statement = NULL;
 
 	sqlite3_prepare_v2(database_connection, sql_statement, 295, &prepared_statement, NULL);
-	sqlite3_bind_int(prepared_statement, 1, pkg->id);
+	sqlite3_bind_text(prepared_statement, 1, pkg->path, -1, NULL);
+	sqlite3_bind_text(prepared_statement, 2, pkg->name, -1, NULL);
 
 	sqlite3_step(prepared_statement);
 	sqlite3_finalize(prepared_statement);

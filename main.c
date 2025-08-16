@@ -75,7 +75,7 @@ int main(int argc, char *argv[]) {
 			i += 2;
 			break;
 		case 'r':
-			strcpy(pkg.name, argv[i + 1]);
+			ploc_get_name_and_path(&pkg, argv[i + 1]);
 			ploc_check_conflict(database_connection, false, &pkg);
 			ploc_delete_package(database_connection, &pkg);
 
