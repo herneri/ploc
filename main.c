@@ -59,9 +59,11 @@ int main(int argc, char *argv[]) {
 
 		switch (argv[i][1]) {
 		case 'i':
-			if (i + 2 >= argc) {
-				fprintf(stderr, "ploc: Not enough arguments\n");
-				return PLOC_ARG_SYNTAX_ERR;
+			if ((i + 1 == argc - 1) || (i + 1 < argc - 1 && argv[i + 1][0] == '-')) {
+				ploc_get_name_and_path(&pkg, argv[i + 1]);
+				ploc_database_insert(database_connection, &pkg);
+				i++;
+				break;
 			}
 
 			if (strchr(argv[i + 2], '/') == NULL) {
