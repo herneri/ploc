@@ -24,7 +24,6 @@
 bool ploc_database_initialize(sqlite3 *database_connection) {
 	const char *sql_statement = "\
 					CREATE TABLE IF NOT EXISTS package(\
-						id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\
 						name VARCHAR(20) NOT NULL,\
 						pgroup VARCHAR(20) DEFAULT 'none',\
 						path VARCHAR(255) DEFAULT '' NOT NULL\

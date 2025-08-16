@@ -21,7 +21,6 @@ struct Package {
 	char name[20];
 	char group[20];
 	char path[255];
-	int id;
 };
 
 /* Default package values */
