@@ -255,3 +255,17 @@ void ploc_database_load_info(sqlite3 *database_connection, struct Package *pkg) 
 	sqlite3_finalize(prepared_statement);
 	return;
 }
+
+void ploc_database_fetch_table(sqlite3 *database_connection) {
+	char *sql_statement = "SELECT path, name FROM package";
+	sqlite3_stmt *prepared_statement = NULL;
+
+	sqlite3_prepare_v2(database_connection, sql_statement, 295, &prepared_statement, NULL);
+
+	while (sqlite3_step(prepared_statement) == SQLITE_ROW) {
+		printf("%s%s\n", sqlite3_column_text(prepared_statement, 0), sqlite3_column_text(prepared_statement, 1));
+	}
+
+	sqlite3_finalize(prepared_statement);
+	return;
+}

@@ -40,4 +40,7 @@ void ploc_database_search_unique(sqlite3 *database_connection, struct Package *p
 /* Load package metadata into a struct. */
 void ploc_database_load_info(sqlite3 *database_connection, struct Package *pkg);
 
+/* Print all recorded packages. */
+void ploc_database_fetch_table(sqlite3 *database_connection);
+
 #endif

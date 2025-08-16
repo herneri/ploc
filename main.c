@@ -52,7 +52,7 @@ int main(int argc, char *argv[]) {
 			return PLOC_ARG_SYNTAX_ERR;
 		}
 
-		if (arg_mode == GET_OPERATION && i + 1 >= argc) {
+		if (arg_mode == GET_OPERATION && argv[i][1] != 'a' && i + 1 >= argc) {
 			fprintf(stderr, "ploc: Not enough arguments\n");
 			return PLOC_ARG_SYNTAX_ERR;
 		}
@@ -103,6 +103,10 @@ int main(int argc, char *argv[]) {
 			ploc_database_search_unique(database_connection, &pkg);
 
 			i++;
+			arg_mode = FIND_ARG;
+			break;
+		case 'a':
+			ploc_database_fetch_table(database_connection);
 			arg_mode = FIND_ARG;
 			break;
 		default:
