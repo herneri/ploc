@@ -1,9 +1,9 @@
-.TH ploc 1 "02 8 2025" "1.0" "User commands"
+.TH ploc 1 "08 15 2025" "1.0" "User commands"
 .SH NAME
 ploc \- Package manager for locally installed packages
 
 .SH SYNOPSIS
-ploc [OPTION] [PACKAGE]
+ploc [OPTION] [PACKAGE_NAME]
 
 .SH DESCRIPTION
 Manages packages that were user installed. This avoids interference with the
@@ -18,19 +18,21 @@ Print options.
 \fB\-v\fR
 Print version.
 .TP
-\fB\-i\fR
-Create a copy of a package and install it.
+\fB\-i [SOURCE] [DESTINATION]\fR
 .TP
-\fB\-r\fR
+\fB   [ABSOLUTE_PACKAGE_PATH]\fR
+Create a copy of a package and install it or record an installed package. DESTINATION must be an absolute path with the name that you want to install the package under.
+.TP
+\fB\-r [PACKAGE_NAME]\fR
 Delete a package.
 .TP
-\fB\-l\fR
+\fB\-l [PACKAGE_NAME]\fR
 Print package metadata.
 .TP
-\fB\-s\fR
+\fB\-s [PACKAGE_NAME]\fR
 Search for packages that have the same name.
 .TP
-\fB\-S\fR
+\fB\-S [ABSOLUTE_PACKAGE_PATH]\fR
 Search for a specific package.
 
 .SH EXIT STATUS
@@ -40,6 +42,14 @@ Search for a specific package.
 1: Failed to open database
 .TP
 2: Failed to initialize database
+.TP
+3: File write or read failure
+.TP
+4: Conflict with a recorded package
+.TP
+5: System memory allocation error
+.TP
+6: Improper argument syntax
 
 .SH FILES
 .LP
